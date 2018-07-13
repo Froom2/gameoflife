@@ -1,11 +1,5 @@
 package life
 
-case class Life(aliveNeighbours: Integer, wasAlive: Boolean, willBeAlive: Boolean) {
-
-  val alive = aliveNeighbours == 2 || aliveNeighbours == 3
-
-}
-
 case class Crawlie(xCoord: Integer, yCoord: Integer, alive: Boolean) {
 
   def howManyAliveNeighbours(crawlies: Seq[Crawlie]): Integer = {
@@ -21,9 +15,11 @@ case class Crawlie(xCoord: Integer, yCoord: Integer, alive: Boolean) {
 
   }
 
-}
+  def nextCrawlie(crawlies:Seq[Crawlie]): Crawlie = {
 
-case class World(crawlies: Seq[Crawlie]){
+    val aliveCrawlies = howManyAliveNeighbours(crawlies)
 
+    Crawlie(1, 1, aliveCrawlies==2 || aliveCrawlies==3)
+  }
 
 }

@@ -107,4 +107,41 @@ class LifeSpec extends WordSpec with MustMatchers {
       }
     }
   }
+
+  "nextCrawlie" should {
+    "return a new dead crawlie" when {
+      "there are no alive neighbours" in {
+        val testCrawlie = Crawlie(1, 1, true)
+        val crawlie2 = Crawlie(1, 2, false)
+        val crawlie3 = Crawlie(2, 1, false)
+        val crawlie4 = Crawlie(2, 2, false)
+
+        val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4)
+
+        testCrawlie.nextCrawlie(crawlies) mustBe Crawlie(1, 1, false)
+      }
+    }
+    "return a new alive crawlie" when {
+      "there are 2 alive neighbours" in {
+        val testCrawlie = Crawlie(1, 1, true)
+        val crawlie2 = Crawlie(1, 2, true)
+        val crawlie3 = Crawlie(2, 1, true)
+        val crawlie4 = Crawlie(2, 2, false)
+
+        val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4)
+
+        testCrawlie.nextCrawlie(crawlies) mustBe Crawlie(1, 1, true)
+      }
+      "there are 3 alive neighbours" in {
+        val testCrawlie = Crawlie(1, 1, true)
+        val crawlie2 = Crawlie(1, 2, true)
+        val crawlie3 = Crawlie(2, 1, true)
+        val crawlie4 = Crawlie(2, 2, true)
+
+        val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4)
+
+        testCrawlie.nextCrawlie(crawlies) mustBe Crawlie(1, 1, true)
+      }
+    }
+  }
 }
