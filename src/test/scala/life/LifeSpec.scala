@@ -17,5 +17,18 @@ class LifeSpec extends WordSpec with MustMatchers {
       crawlie1.howManyAliveNeighbours(crawlies) mustBe 0
 
     }
+
+    "return 1 when there is 1 alive neighbour in a sequence" in {
+
+      val crawlie1 = Crawlie(1,1,true)
+      val crawlie2 = Crawlie(1,2,true)
+      val crawlie3 = Crawlie(2,1,false)
+      val crawlie4 = Crawlie(2,2,false)
+
+      val crawlies = Seq(crawlie1, crawlie2, crawlie3, crawlie4)
+
+      crawlie1.howManyAliveNeighbours(crawlies) mustBe 1
+
+    }
   }
 }

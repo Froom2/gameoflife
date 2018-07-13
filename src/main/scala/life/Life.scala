@@ -9,7 +9,14 @@ case class Life(aliveNeighbours: Integer, wasAlive: Boolean, willBeAlive: Boolea
 case class Crawlie(xCoord: Integer, yCoord: Integer, alive: Boolean) {
 
   def howManyAliveNeighbours(crawlies: Seq[Crawlie]): Integer = {
-    0
+
+    val neighbours = crawlies.filter(crawlie =>
+      crawlie.yCoord == (yCoord + 1)
+    )
+    val aliveNeighbours = neighbours.filter(_.alive)
+
+    aliveNeighbours.size
+
   }
 
 }
