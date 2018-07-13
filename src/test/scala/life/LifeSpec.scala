@@ -15,7 +15,7 @@ class LifeSpec extends WordSpec with MustMatchers {
 
         val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4)
 
-        testCrawlie.howManyAliveNeighbours(crawlies) mustBe 0
+        testCrawlie.howManyAliveNeighbours(crawlies) mustEqual 0
 
       }
     }
@@ -30,7 +30,7 @@ class LifeSpec extends WordSpec with MustMatchers {
 
         val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4)
 
-        testCrawlie.howManyAliveNeighbours(crawlies) mustBe 1
+        testCrawlie.howManyAliveNeighbours(crawlies) mustEqual 1
 
       }
 
@@ -43,7 +43,7 @@ class LifeSpec extends WordSpec with MustMatchers {
 
         val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4)
 
-        testCrawlie.howManyAliveNeighbours(crawlies) mustBe 2
+        testCrawlie.howManyAliveNeighbours(crawlies) mustEqual 2
 
       }
 
@@ -56,7 +56,7 @@ class LifeSpec extends WordSpec with MustMatchers {
 
         val crawlies = Seq(crawlie1, testCrawlie, crawlie3, crawlie4)
 
-        testCrawlie.howManyAliveNeighbours(crawlies) mustBe 1
+        testCrawlie.howManyAliveNeighbours(crawlies) mustEqual 1
 
       }
 
@@ -69,7 +69,7 @@ class LifeSpec extends WordSpec with MustMatchers {
 
         val crawlies = Seq(crawlie1, crawlie2, testCrawlie, crawlie4)
 
-        testCrawlie.howManyAliveNeighbours(crawlies) mustBe 1
+        testCrawlie.howManyAliveNeighbours(crawlies) mustEqual 1
 
       }
     }
@@ -85,7 +85,7 @@ class LifeSpec extends WordSpec with MustMatchers {
 
         val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4)
 
-        testCrawlie.howManyAliveNeighbours(crawlies) mustBe 1
+        testCrawlie.howManyAliveNeighbours(crawlies) mustEqual 1
 
       }
     }
@@ -102,7 +102,7 @@ class LifeSpec extends WordSpec with MustMatchers {
 
         val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4, crawlie5, crawlie6)
 
-        testCrawlie.howManyAliveNeighbours(crawlies) mustBe 0
+        testCrawlie.howManyAliveNeighbours(crawlies) mustEqual 0
 
       }
     }
@@ -118,7 +118,7 @@ class LifeSpec extends WordSpec with MustMatchers {
 
         val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4)
 
-        testCrawlie.nextCrawlie(crawlies) mustBe Crawlie(1, 1, false)
+        testCrawlie.nextCrawlie(crawlies) mustEqual Crawlie(1, 1, false)
       }
     }
     "return a new alive crawlie" when {
@@ -130,7 +130,7 @@ class LifeSpec extends WordSpec with MustMatchers {
 
         val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4)
 
-        testCrawlie.nextCrawlie(crawlies) mustBe Crawlie(1, 1, true)
+        testCrawlie.nextCrawlie(crawlies) mustEqual Crawlie(1, 1, true)
       }
       "there are 3 alive neighbours" in {
         val testCrawlie = Crawlie(1, 1, true)
@@ -140,8 +140,32 @@ class LifeSpec extends WordSpec with MustMatchers {
 
         val crawlies = Seq(testCrawlie, crawlie2, crawlie3, crawlie4)
 
-        testCrawlie.nextCrawlie(crawlies) mustBe Crawlie(1, 1, true)
+        testCrawlie.nextCrawlie(crawlies) mustEqual Crawlie(1, 1, true)
       }
+    }
+  }
+
+  "generateNextCrawlieSnapshot" should {
+    "generate a new sequence of crawlies" in {
+
+      val crawlie1 = Crawlie(1, 1, true)
+      val crawlie2 = Crawlie(1, 2, true)
+      val crawlie3 = Crawlie(2, 1, true)
+      val crawlie4 = Crawlie(2, 2, false)
+
+      val crawlies = Seq(crawlie1, crawlie2, crawlie3, crawlie4)
+
+      val testWorld = CrawlieSnapshot(crawlies)
+
+      val expectedNewSnapshot = CrawlieSnapshot(Seq(
+        crawlie1,
+        crawlie2,
+        crawlie3,
+        crawlie4.copy(alive = true)
+      ))
+      
+      testWorld.generateNextCrawlieSnapshot mustEqual expectedNewSnapshot
+
     }
   }
 }

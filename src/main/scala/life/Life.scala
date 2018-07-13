@@ -19,7 +19,16 @@ case class Crawlie(xCoord: Integer, yCoord: Integer, alive: Boolean) {
 
     val aliveCrawlies = howManyAliveNeighbours(crawlies)
 
-    Crawlie(1, 1, aliveCrawlies==2 || aliveCrawlies==3)
+    Crawlie(xCoord, yCoord, aliveCrawlies==2 || aliveCrawlies==3)
+  }
+
+}
+
+case class CrawlieSnapshot(crawlies: Seq[Crawlie]){
+
+  def generateNextCrawlieSnapshot: CrawlieSnapshot = {
+    val newCrawlies = crawlies.map(_.nextCrawlie(crawlies))
+    CrawlieSnapshot(newCrawlies)
   }
 
 }
