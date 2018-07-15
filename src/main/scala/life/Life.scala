@@ -15,20 +15,29 @@ case class Crawlie(xCoord: Integer, yCoord: Integer, alive: Boolean) {
 
   }
 
-  def nextCrawlie(crawlies:Seq[Crawlie]): Crawlie = {
+  def nextCrawlie(crawlies: Seq[Crawlie]): Crawlie = {
 
     val aliveCrawlies = howManyAliveNeighbours(crawlies)
 
-    Crawlie(xCoord, yCoord, aliveCrawlies==2 || aliveCrawlies==3)
+    Crawlie(xCoord, yCoord, aliveCrawlies == 2 || aliveCrawlies == 3)
   }
 
 }
 
-case class CrawlieSnapshot(crawlies: Seq[Crawlie]){
+case class CrawlieSnapshot(crawlies: Seq[Crawlie]) {
 
   def generateNextCrawlieSnapshot: CrawlieSnapshot = {
     val newCrawlies = crawlies.map(_.nextCrawlie(crawlies))
     CrawlieSnapshot(newCrawlies)
+
   }
+
+  def generateWorld(iterations: Integer): Seq[CrawlieSnapshot] = {
+    Seq(this, generateNextCrawlieSnapshot)
+  }
+}
+
+case class World() {
+
 
 }

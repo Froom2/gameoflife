@@ -155,7 +155,7 @@ class LifeSpec extends WordSpec with MustMatchers {
 
       val crawlies = Seq(crawlie1, crawlie2, crawlie3, crawlie4)
 
-      val testWorld = CrawlieSnapshot(crawlies)
+      val testSnapshot = CrawlieSnapshot(crawlies)
 
       val expectedNewSnapshot = CrawlieSnapshot(Seq(
         crawlie1,
@@ -164,7 +164,29 @@ class LifeSpec extends WordSpec with MustMatchers {
         crawlie4.copy(alive = true)
       ))
       
-      testWorld.generateNextCrawlieSnapshot mustEqual expectedNewSnapshot
+      testSnapshot.generateNextCrawlieSnapshot mustEqual expectedNewSnapshot
+
+    }
+  }
+
+  "generateWorld" should {
+    "return a sequence of the given number of snapshots" in {
+
+      val crawlie1 = Crawlie(1, 1, true)
+      val crawlie2 = Crawlie(1, 2, true)
+      val crawlie3 = Crawlie(2, 1, true)
+      val crawlie4 = Crawlie(2, 2, false)
+      val crawlieNew = Crawlie(2, 2, true)
+
+      val crawlies = Seq(crawlie1, crawlie2, crawlie3, crawlie4)
+
+      val testSnapshot = CrawlieSnapshot(crawlies)
+
+      val newSnapshot = CrawlieSnapshot(Seq(crawlie1, crawlie2, crawlie3, crawlieNew))
+
+      testSnapshot.generateWorld(2) mustBe Seq(
+        testSnapshot, newSnapshot
+      )
 
     }
   }
